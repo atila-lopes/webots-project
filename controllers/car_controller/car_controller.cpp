@@ -41,7 +41,7 @@ int main() {
   while (robot.step(timestep) != -1) {
 
     std::ifstream file(
-      "C:/Users/atila/Documents/my_project/worlds/command.txt"
+      "../../worlds/command.txt"
     );
     
     if (file) {
