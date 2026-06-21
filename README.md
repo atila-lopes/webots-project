@@ -1,62 +1,66 @@
 # Scorpion
 
-Sistema para controle remoto de um robô móvel no simulador Webots por meio de uma interface web desenvolvida com HTML, JavaScript e Flask.
+Sistema de controle remoto de um robô móvel no simulador Webots por meio de uma interface web.
 
 ---
 
-## 📖 Sobre o Projeto
+## Descrição
 
-O **Scorpion** é um projeto desenvolvido com o objetivo de demonstrar a integração entre aplicações Web e simulação robótica utilizando o **Webots**.
+O **Scorpion** é um projeto desenvolvido para demonstrar a integração entre aplicações web e simulação robótica utilizando o simulador **Webots**. O sistema permite controlar um robô móvel por meio de uma interface acessível via navegador, estabelecendo uma comunicação entre o usuário e o controlador do robô.
 
-A aplicação permite controlar um robô móvel através de uma interface acessível pelo navegador. Os comandos enviados pelo usuário são recebidos por um servidor Flask, armazenados em um arquivo de comunicação e interpretados por um controlador em C++ executado pelo Webots.
+A arquitetura do projeto é composta por três componentes principais:
 
-Além de servir como uma demonstração prática de robótica móvel, o projeto aborda conceitos de comunicação cliente-servidor, integração entre linguagens de programação e controle de atuadores em ambientes simulados.
+* Interface web desenvolvida em HTML e JavaScript;
+* Servidor HTTP desenvolvido em Python utilizando o framework Flask;
+* Controlador do robô implementado em C++ utilizando a API do Webots.
+
+O projeto foi desenvolvido com fins acadêmicos, servindo como apoio ao estudo de robótica móvel, programação orientada a objetos, comunicação cliente-servidor e integração entre diferentes tecnologias.
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-* Controle remoto via navegador;
+* Controle remoto do robô por meio de navegador web;
 * Movimento para frente;
 * Movimento para trás;
-* Rotação para esquerda;
-* Rotação para direita;
+* Rotação para a esquerda;
+* Rotação para a direita;
 * Parada imediata do robô;
-* Comunicação entre navegador e simulador em tempo real;
-* Arquitetura simples e modular.
+* Comunicação entre interface web e simulador;
+* Arquitetura modular e de fácil extensão.
 
 ---
 
-## 🏗 Arquitetura
+## Arquitetura
 
 ```text
-                 +-------------------+
-                 |     Navegador     |
-                 | HTML + JavaScript |
-                 +---------+---------+
-                           |
-                     HTTP POST
-                           |
-                           ▼
-                 +-------------------+
-                 |   Servidor Flask  |
-                 +---------+---------+
-                           |
-                     command.txt
-                           |
-                           ▼
-                 +-------------------+
-                 | Controlador C++   |
-                 |      Webots       |
-                 +---------+---------+
-                           |
-                           ▼
-                    Motores do Robô
+                    +----------------------+
+                    |      Navegador       |
+                    |   HTML / JavaScript  |
+                    +----------+-----------+
+                               |
+                           HTTP POST
+                               |
+                               v
+                    +----------------------+
+                    |    Servidor Flask    |
+                    +----------+-----------+
+                               |
+                         command.txt
+                               |
+                               v
+                    +----------------------+
+                    |  Controlador C++     |
+                    |      (Webots)        |
+                    +----------+-----------+
+                               |
+                               v
+                         Motores do Robô
 ```
 
 ---
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 Scorpion/
@@ -71,143 +75,146 @@ Scorpion/
 │
 ├── worlds/
 │   ├── command.txt
-│   └── *.wbt
+│   └── scorpion.wbt
 │
 └── README.md
 ```
 
 ---
 
-## ⚙ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
-| Tecnologia | Finalidade          |
-| ---------- | ------------------- |
-| Webots     | Simulação robótica  |
-| C++        | Controlador do robô |
-| Python     | Servidor Web        |
-| Flask      | API HTTP            |
-| HTML5      | Interface Web       |
-| JavaScript | Envio dos comandos  |
-| Git        | Controle de versão  |
-
----
-
-## 🚗 Comandos
-
-| Botão    | Código | Ação                        |
-| -------- | :----: | --------------------------- |
-| Frente   |   `F`  | Move o robô para frente     |
-| Ré       |   `B`  | Move o robô para trás       |
-| Esquerda |   `L`  | Gira o robô para a esquerda |
-| Direita  |   `R`  | Gira o robô para a direita  |
-| Parar    |   `S`  | Interrompe o movimento      |
+| Tecnologia | Descrição                       |
+| ---------- | ------------------------------- |
+| C++        | Controlador do robô             |
+| Python     | Servidor da aplicação           |
+| Flask      | Framework para comunicação HTTP |
+| HTML5      | Interface do usuário            |
+| JavaScript | Envio dos comandos              |
+| Webots     | Ambiente de simulação robótica  |
+| Git        | Controle de versão              |
 
 ---
 
-## 🚀 Como Executar
+## Funcionamento
 
-### 1. Clone o repositório
+O sistema opera conforme o fluxo descrito a seguir:
+
+1. O usuário acessa a interface web.
+2. Um comando de movimentação é selecionado.
+3. O JavaScript envia uma requisição HTTP ao servidor Flask.
+4. O servidor grava o comando no arquivo `command.txt`.
+5. O controlador em C++ executado pelo Webots lê continuamente esse arquivo.
+6. O controlador interpreta o comando recebido.
+7. As velocidades dos motores são atualizadas.
+8. O robô executa o movimento correspondente.
+
+---
+
+## Comandos Disponíveis
+
+| Comando | Descrição                        |
+| ------- | -------------------------------- |
+| `F`     | Move o robô para frente          |
+| `B`     | Move o robô para trás            |
+| `L`     | Rotaciona o robô para a esquerda |
+| `R`     | Rotaciona o robô para a direita  |
+| `S`     | Interrompe o movimento           |
+
+---
+
+## Requisitos
+
+Para executar o projeto são necessários:
+
+* Webots;
+* Python 3.10 ou superior;
+* Flask;
+* Compilador C++ compatível com o Webots;
+* Git.
+
+---
+
+## Instalação
+
+### Clonar o repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/scorpion.git
+git clone https://github.com/usuario/scorpion.git
 ```
 
-### 2. Entre na pasta do projeto
+### Acessar o diretório
 
 ```bash
 cd Scorpion
 ```
 
-### 3. Instale as dependências
+### Instalar as dependências
 
 ```bash
 pip install flask
 ```
 
-### 4. Inicie o servidor
+---
+
+## Execução
+
+### Iniciar o servidor
 
 ```bash
 cd web
 python server.py
 ```
 
-### 5. Abra o navegador
+### Abrir a interface
 
-```
+Acesse o seguinte endereço no navegador:
+
+```text
 http://localhost:5000
 ```
 
-### 6. Execute a simulação
+### Executar a simulação
 
-Abra o mundo (`.wbt`) no Webots e inicie a simulação.
-
----
-
-## 🔄 Fluxo de Funcionamento
-
-1. O usuário pressiona um botão na interface web;
-2. O JavaScript envia uma requisição HTTP para o servidor Flask;
-3. O servidor recebe o comando e o grava em `command.txt`;
-4. O controlador em C++ lê continuamente esse arquivo;
-5. O controlador altera a velocidade dos motores;
-6. O robô executa o movimento solicitado.
+1. Abra o arquivo do mundo (`.wbt`) no Webots.
+2. Inicie a simulação.
+3. Utilize a interface web para controlar o robô.
 
 ---
 
-## 📸 Demonstração
+## Organização dos Componentes
 
-Adicione aqui uma imagem ou GIF mostrando o funcionamento do sistema.
+### Interface Web
 
-```markdown
-![Demonstração](images/demo.gif)
-```
+Responsável por fornecer os controles de movimentação ao usuário e enviar os comandos ao servidor por meio de requisições HTTP.
 
-ou
+### Servidor Flask
 
-```markdown
-![Simulação](images/scorpion.png)
-```
+Recebe os comandos enviados pela interface e os grava no arquivo utilizado como meio de comunicação com o controlador do robô.
+
+### Controlador do Robô
+
+Executado pelo Webots, realiza a leitura contínua do arquivo de comandos e ajusta a velocidade dos motores conforme a instrução recebida.
 
 ---
 
-## 💡 Possíveis Melhorias
+## Possíveis Extensões
+
+O projeto pode ser expandido com funcionalidades como:
 
 * Controle por teclado;
-* Controle utilizando joystick;
-* Comunicação por WebSocket;
-* Comunicação TCP/IP;
+* Controle por joystick;
+* Comunicação utilizando WebSocket;
 * Integração com ROS 2;
-* Controle de velocidade proporcional;
-* Leitura de sensores em tempo real;
+* Controle proporcional de velocidade;
+* Monitoramento de sensores em tempo real;
 * Interface responsiva para dispositivos móveis;
-* Feedback do estado do robô na interface;
-* Múltiplos robôs controlados simultaneamente.
+* Controle simultâneo de múltiplos robôs;
+* Registro de comandos e telemetria;
+* Comunicação direta por TCP/IP.
 
 ---
 
-## 🎓 Objetivos Educacionais
+## Licença
 
-Este projeto foi desenvolvido para auxiliar no estudo de:
-
-* Robótica móvel;
-* Simulação computacional;
-* Programação em C++;
-* Desenvolvimento Web;
-* Comunicação cliente-servidor;
-* Integração entre aplicações;
-* Arquitetura de software;
-* Controle de motores em robôs diferenciais.
-
----
-
-## 👨‍💻 Autor
-
-**Átila Lopes Bernardino**
-
-Graduando em Engenharia de Computação.
-
----
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins acadêmicos e educacionais. Sinta-se à vontade para utilizá-lo como base para estudos, pesquisas e projetos de extensão.
+Este projeto foi desenvolvido para fins acadêmicos e educacionais. Sua utilização é permitida para estudos, pesquisas e desenvolvimento de projetos derivados, desde que mantidos os devidos créditos aos autores.
